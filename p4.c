@@ -1,16 +1,17 @@
 #include <stdio.h>
-#include <stidlib.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
-#define NBL  6
-#define NBC  7
+
 #define tokken "OX"
+int col;
 
-char tab[NBL][NBC];
+char tab[6][7];
 
 void init(void){ // initialisation du tableau
-  for(int l=0; l<NBL; l++)
+  for(int l=0; l<6; l++)
     {
-      for(int c=0; c<NBC; c++)
+      for(int c=0; c<7; c++)
 	{
 	  tab[l][c] = '.' ;
 	}
@@ -18,52 +19,64 @@ void init(void){ // initialisation du tableau
 }
 
 void showtab(void){ // affichage du tableau
-  for(int l=0; l<NBL; l++)
+  for(int l=0; l<6; l++)
     {
-      for(int c=0; c<NBC; c++)
+      printf("\n");
+      for(int c=0; c<7; c++)
 	{
-	  printf("%c",tab[l][c]);
+	  printf("%c ",tab[l][c]);
 	}
     }
 }
 
+int valid(int number)
+{
+  if ( (number < 0) || (number > 6) )
+    printf("SALE ENCULER");
+    return 0;
+  if (tab[6-1][number] != '.')
+    return 0;
+  return 1;
+}
+
 int ask(void){ // demande de réponse du joueur
   int num;
-  printf("%c","Dans quelle colonne veux-tu jouer ?\n");
+  printf("\nDans quelle colonne veux-tu jouer ?\n");
   scanf ("%d",&num);
   return num;
 }
 
 int bottom(int col){ // vérification de la place sur une colonne
-      int ligne = 0
-	while(ligne <= 5 || ligne == 1){
-	  if(tab[ligne][col]  == '.'){
-	    ligne++;
-	  }
-	  else{
-	                ligne--
-			  return ligne;
-	  }
-	}
+  int line = 0;
+  while(line <= 5 || line == 1){
+    if(tab[line][col]  == '.'){
+      line++;
+    }
+    else{
+      line--;
+      return line;
+    }
+  }
 }
 
-void play(int joueur,int ,int col){ // place des tokkens dans le jeu
-      tab[ligne][col]= tokken[joueur]
-	}
+void play(int player,int col){ // place des tokkens dans le jeu
+  int line = bottom(col);
+  tab[line][col]= tokken[player];
+}
+
 
 int main(void){ // fonction principale du jeu
-      int compteur=0
-	    int tokkenmax=NBL*NBC
-	init();
-      showtab();
-      while (compteur<tokkenmax){
-
-      }
-      return 0;
+  int counter=0;
+  int tokkenmax=6*7;
+  int player = 0;
+  init();
+  while (counter<tokkenmax){
+    showtab();
+    play(player,ask());
+    counter ++;
+    player = !player;
+  }
+  printf("draw");
+  return 0;
 
 }
-
-
-
-
-system ("cls") //wipe the console !
